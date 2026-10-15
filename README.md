@@ -1,7 +1,8 @@
 # Sparse Autoencoders Are a Shared Coordinate System for Symbolic Matching
 
-**Xiaocong Yang, Xuanyu Meng, Yuji Zhang, Jiawei Han, ChengXiang Zhai**
-University of Illinois Urbana-Champaign
+[![arXiv](https://img.shields.io/badge/arXiv-2610.19636-b31b1b.svg)](https://arxiv.org/abs/2610.19636)
+[![Paper PDF](https://img.shields.io/badge/Paper-PDF-blue.svg)](https://arxiv.org/pdf/2610.19636)
+[![Citation](https://img.shields.io/badge/Cite-BibTeX-green.svg)](#citation)
 
 This repository holds the code, result snapshots and LaTeX source for **SAE-IDF**, a training-free
 method that matches symbols across heterogeneous symbolic systems: formal-mathematics provers,
@@ -266,23 +267,16 @@ or SAE (Gemma Scope `params.npz` or Llama Scope `final.safetensors`) without the
 
 ## Citation
 
+If you use this code, please cite the paper ([arXiv:2610.19636](https://arxiv.org/abs/2610.19636)):
+
 ```bibtex
 @misc{yang2026sparse,
-  title  = {Sparse Autoencoders Are a Shared Coordinate System for Symbolic Matching},
-  author = {Yang, Xiaocong and Meng, Xuanyu and Zhang, Yuji and Han, Jiawei and Zhai, ChengXiang},
-  year   = {2026}
+  title         = {Sparse Autoencoders Are a Shared Coordinate System for Symbolic Matching},
+  author        = {Yang, Xiaocong and Meng, Xuanyu and Zhang, Yuji and Han, Jiawei and Zhai, ChengXiang},
+  year          = {2026},
+  eprint        = {2610.19636},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.LG},
+  url           = {https://arxiv.org/abs/2610.19636}
 }
 ```
-
-## Acknowledgments
-
-We thank the INVITE Institute at the University of Illinois Urbana-Champaign and the ACCESS program
-for the computing credits that supported this work. This material is based upon work supported by
-the National Science Foundation and the Institute of Education Sciences under Grant #2229612. Any
-opinions, findings, and conclusions or recommendations expressed in this material are those of the
-author(s) and do not necessarily reflect the views of National Science Foundation or the U.S.
-Department of Education. This work used the Delta system at the National Center for Supercomputing
-Applications [award OAC 2005572] through allocations CIS251094 and CIS261897 from the Advanced
-Cyberinfrastructure Coordination Ecosystem: Services & Support (ACCESS) program (Boerner et al.,
-2023), which is supported by National Science Foundation grants #2138259, #2138286, #2138307,
-#2137603, and #2138296.
