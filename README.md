@@ -53,31 +53,58 @@ Nothing is trained or fine-tuned, and no part of the method is specific to one k
 SAE-IDF beats the same model's dense hidden state on all 14 rows with Gemma-2-9B and on 13 of 14
 with Llama-3.1-8B. The largest gain is +0.45 MRR, on Lean 4 → Metamath.
 
-| Task | Metric | Strings | Gemma Dense | Gemma Dense −PC1 | Gemma **SAE-IDF** | Gemma Δ dense | Llama Dense | Llama Dense −PC1 | Llama **SAE-IDF** | Llama Δ dense |
-|:--|:--|--:|--:|--:|--:|--:|--:|--:|--:|--:|
-| *Formal mathematics (miniF2F)* | | | | | | | | | | |
-| Lean 4 → Isabelle | MRR | 0.825 | 0.912 | 0.926 | **0.961** | +0.05 | 0.942 | 0.944 | **0.976** | +0.03 |
-| Lean 4 → Metamath | MRR | 0.615 | 0.210 | 0.151 | **0.661** | +0.45 | 0.646 | 0.637 | **0.787** | +0.14 |
-| Lean 4 → HOL Light | MRR | 0.741 | 0.539 | 0.531 | **0.898** | +0.36 | 0.603 | 0.699 | **0.906** | +0.30 |
-| *Code (XLCoST, program level)* | | | | | | | | | | |
-| 7 languages, mean | MRR† | **0.468** | 0.454 | 0.452 | 0.464 | +0.01 | 0.451 | 0.447 | 0.442 | −0.01 |
-| 7 languages, mean | P@6† | **0.745** | 0.680 | 0.678 | 0.732 | +0.05 | 0.641 | 0.648 | 0.657 | +0.02 |
-| *Table schemas (Valentine)* | | | | | | | | | | |
-| source → target columns | F1 | – | 0.533 | 0.534 | **0.614** | +0.08 | 0.588 | 0.579 | **0.625** | +0.04 |
-| source → target columns | MRR | – | 0.766 | 0.761 | **0.856** | +0.09 | 0.786 | 0.811 | **0.862** | +0.08 |
-| *Knowledge graphs (OAEI Common-KG)* | | | | | | | | | | |
-| NELL → DBpedia | MRR | 0.936 | 0.931 | 0.957 | **0.976** | +0.04 | 0.949 | **0.960** | 0.958 | +0.01 |
-| YAGO → Wikidata | MRR | 0.899 | 0.860 | 0.932 | **0.962** | +0.10 | 0.889 | **0.944** | **0.944** | +0.06 |
-| *Cross-lingual ontologies (MultiFarm)* | | | | | | | | | | |
-| Chinese → English | MRR | 0.230 | 0.650 | **0.760** | 0.754 | +0.10 | 0.659 | 0.779 | **0.787** | +0.13 |
-| Russian → English | MRR | 0.234 | 0.644 | 0.751 | **0.765** | +0.12 | 0.661 | **0.751** | 0.726 | +0.06 |
-| Arabic → English | MRR | 0.238 | 0.595 | 0.702 | **0.722** | +0.13 | 0.578 | 0.669 | **0.672** | +0.09 |
-| *Biomedical ontologies (Bio-ML, Anatomy)* | | | | | | | | | | |
-| NCIT → DOID | MRR | 0.779 | 0.701 | 0.732 | **0.817** | +0.12 | 0.704 | 0.710 | **0.779** | +0.08 |
-| mouse → human | MRR | 0.734 | 0.812 | 0.864 | **0.886** | +0.07 | 0.800 | **0.871** | 0.844 | +0.04 |
+**Gemma-2-9B** (layer 20, Gemma Scope 131k)
 
-How to read the table:
-- **Bold** marks the best value per row within each model; Strings counts toward both models' comparisons.
+| Task | Metric | Strings | Dense | Dense −PC1 | **SAE-IDF (ours)** | Δ dense |
+|:--|:--|--:|--:|--:|--:|--:|
+| *Formal mathematics (miniF2F)* | | | | | | |
+| Lean 4 → Isabelle | MRR | 0.825 | 0.912 | 0.926 | **0.961** | +0.05 |
+| Lean 4 → Metamath | MRR | 0.615 | 0.210 | 0.151 | **0.661** | +0.45 |
+| Lean 4 → HOL Light | MRR | 0.741 | 0.539 | 0.531 | **0.898** | +0.36 |
+| *Code (XLCoST, program level)* | | | | | | |
+| 7 languages, mean | MRR† | **0.468** | 0.454 | 0.452 | 0.464 | +0.01 |
+| 7 languages, mean | P@6† | **0.745** | 0.680 | 0.678 | 0.732 | +0.05 |
+| *Table schemas (Valentine)* | | | | | | |
+| source → target columns | F1 | – | 0.533 | 0.534 | **0.614** | +0.08 |
+| source → target columns | MRR | – | 0.766 | 0.761 | **0.856** | +0.09 |
+| *Knowledge graphs (OAEI Common-KG)* | | | | | | |
+| NELL → DBpedia | MRR | 0.936 | 0.931 | 0.957 | **0.976** | +0.04 |
+| YAGO → Wikidata | MRR | 0.899 | 0.860 | 0.932 | **0.962** | +0.10 |
+| *Cross-lingual ontologies (MultiFarm)* | | | | | | |
+| Chinese → English | MRR | 0.230 | 0.650 | **0.760** | 0.754 | +0.10 |
+| Russian → English | MRR | 0.234 | 0.644 | 0.751 | **0.765** | +0.12 |
+| Arabic → English | MRR | 0.238 | 0.595 | 0.702 | **0.722** | +0.13 |
+| *Biomedical ontologies (Bio-ML, Anatomy)* | | | | | | |
+| NCIT → DOID | MRR | 0.779 | 0.701 | 0.732 | **0.817** | +0.12 |
+| mouse → human | MRR | 0.734 | 0.812 | 0.864 | **0.886** | +0.07 |
+
+**Llama-3.1-8B** (layer 15, Llama Scope 131k)
+
+| Task | Metric | Strings | Dense | Dense −PC1 | **SAE-IDF (ours)** | Δ dense |
+|:--|:--|--:|--:|--:|--:|--:|
+| *Formal mathematics (miniF2F)* | | | | | | |
+| Lean 4 → Isabelle | MRR | 0.825 | 0.942 | 0.944 | **0.976** | +0.03 |
+| Lean 4 → Metamath | MRR | 0.615 | 0.646 | 0.637 | **0.787** | +0.14 |
+| Lean 4 → HOL Light | MRR | 0.741 | 0.603 | 0.699 | **0.906** | +0.30 |
+| *Code (XLCoST, program level)* | | | | | | |
+| 7 languages, mean | MRR† | **0.468** | 0.451 | 0.447 | 0.442 | −0.01 |
+| 7 languages, mean | P@6† | **0.745** | 0.641 | 0.648 | 0.657 | +0.02 |
+| *Table schemas (Valentine)* | | | | | | |
+| source → target columns | F1 | – | 0.588 | 0.579 | **0.625** | +0.04 |
+| source → target columns | MRR | – | 0.786 | 0.811 | **0.862** | +0.08 |
+| *Knowledge graphs (OAEI Common-KG)* | | | | | | |
+| NELL → DBpedia | MRR | 0.936 | 0.949 | **0.960** | 0.958 | +0.01 |
+| YAGO → Wikidata | MRR | 0.899 | 0.889 | **0.944** | **0.944** | +0.06 |
+| *Cross-lingual ontologies (MultiFarm)* | | | | | | |
+| Chinese → English | MRR | 0.230 | 0.659 | 0.779 | **0.787** | +0.13 |
+| Russian → English | MRR | 0.234 | 0.661 | **0.751** | 0.726 | +0.06 |
+| Arabic → English | MRR | 0.238 | 0.578 | 0.669 | **0.672** | +0.09 |
+| *Biomedical ontologies (Bio-ML, Anatomy)* | | | | | | |
+| NCIT → DOID | MRR | 0.779 | 0.704 | 0.710 | **0.779** | +0.08 |
+| mouse → human | MRR | 0.734 | 0.800 | **0.871** | 0.844 | +0.04 |
+
+How to read the tables:
+- **Bold** marks the best value per row, Strings included; ties go to the model's columns.
 - *Δ dense* is SAE-IDF minus the dense hidden state of the same model.
 - *Strings* is the best of word TF-IDF, character 3–5-gram TF-IDF and BM25 over the same views,
   chosen per task in their favour. For XLCoST it is word TF-IDF, and Valentine has no comparable
@@ -91,7 +118,7 @@ idf library and paired-bootstrap significance tests are in the paper's appendix.
 **Both ingredients are needed.** A random dictionary of the same width and sparsity with the same
 idf weighting falls far short, and so do the learned SAE features without the weighting.
 
-| Task | Metric | Random + idf | SAE unweighted | **SAE-IDF** |
+| Task | Metric | Random + idf | SAE unweighted | **SAE-IDF (ours)** |
 |:--|:--|--:|--:|--:|
 | *Formal mathematics (miniF2F)* | | | | |
 | Lean 4 → Isabelle | MRR | 0.865 | 0.882 | **0.961** |
